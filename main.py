@@ -1,4 +1,6 @@
 
+# https://stackoverflow.com/questions/31147660/importerror-no-module-named-selenium
+
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -11,40 +13,50 @@ import time
 driver = webdriver.Chrome('chromedriver.exe')
 
 driver.get('https://twitter.com/i/flow/login')
-time.sleep(2)
+time.sleep(12)
 
 
 # LOGIN
-login = driver.find_element_by_xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input')
+login = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input')
 login.send_keys(LOGIN)
 time.sleep(3)
-button_next = driver.find_element_by_xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[6]').click()
+button_next = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[6]').click()
 time.sleep(5)
 
 
-# VALIDATION
-validation = driver.find_element_by_xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/label/div/div[2]/div/input')
-validation.send_keys(VALIDATION)
-time.sleep(2)
-button_advance = driver.find_element_by_xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div/div').click()
-time.sleep(5)
 
-
-# PASSWORD
-password = driver.find_element_by_xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input')
-password.send_keys(PASSWORD)
-time.sleep(3)
-button_enter = driver.find_element_by_xpath('//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/div').click()
-time.sleep(5)
+if driver.find_element('xpath', '//*[@id="modal-header"]/span/span').text == 'Digite sua senha':
+    # PASSWORD
+    password = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input')
+    password.send_keys(PASSWORD)
+    time.sleep(3)
+    button_enter = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/div').click()
+    time.sleep(5)
+    
+else:
+    # VALIDATION
+    validation = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/label/div/div[2]/div/input')
+    validation.send_keys(USER_NAME)
+    time.sleep(2)
+    button_advance = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div/div').click()
+    time.sleep(5)
+    
+    # PASSWORD
+    password = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input')
+    password.send_keys(PASSWORD)
+    time.sleep(3)
+    button_enter = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/div').click()
+    time.sleep(5)
+    
 
 
 
 # wait until a specific part of the page loads
 WebDriverWait(driver, 10).until(EC.presence_of_element_located(( By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/form/div[1]/div/div/div/label/div[2]/div/input' )))
 
-researched = "SOMETHING"
+researched = "Ciro Gomes"
 
-search = driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/form/div[1]/div/div/div/label/div[2]/div/input')
+search = driver.find_element('xpath', '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/form/div[1]/div/div/div/label/div[2]/div/input')
 search.send_keys(researched)
 search.send_keys(Keys.ENTER)
 time.sleep(3)
@@ -53,11 +65,11 @@ time.sleep(3)
 
 
 # click on the tag to search for people on twitter
-people = driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[1]/div[1]/div[2]/nav/div/div[2]/div/div[3]/a').click()
+people = driver.find_element('xpath', '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[1]/div[1]/div[2]/nav/div/div[2]/div/div[3]/a').click()
 time.sleep(3)
 
 # PATH to the profile searched for
-profile = driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[2]/div/section/div/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/div/div[1]/a/div/div[1]/span').click()
+profile = driver.find_element('xpath', '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[2]/div/section/div/div/div[1]/div/div/div/div/div[2]/div[1]/div[1]/div/div[1]/a/div/div[1]/span').click()
 
 soup = BeautifulSoup(driver.page_source, 'lxml')
 
@@ -80,5 +92,5 @@ while True:
        break
 
 
-type(twetts)
+
 
