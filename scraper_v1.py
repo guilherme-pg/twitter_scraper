@@ -49,7 +49,7 @@ else:
     
     # PASSWORD
     password = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input')
-    password.send_keys('Pandora00')
+    password.send_keys(os.getenv('PASSWORD'))
     time.sleep(3)
     button_enter = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/div').click()
     time.sleep(5)
