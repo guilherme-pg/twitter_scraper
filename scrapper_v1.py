@@ -1,3 +1,5 @@
+# SCRAPER version 1.0 with selenium
+# PROBLEM: jumping tweets
 
 # https://stackoverflow.com/questions/31147660/importerror-no-module-named-selenium
 
@@ -9,6 +11,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import pandas as pd
 import time
+import os
+from dotenv import load_dotenv
+
+aaa = load_dotenv()
 
 driver = webdriver.Chrome('chromedriver.exe')
 
@@ -18,7 +24,7 @@ time.sleep(12)
 
 # LOGIN
 login = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input')
-login.send_keys(LOGIN)
+login.send_keys(os.getenv('LOGIN'))
 time.sleep(3)
 button_next = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[6]').click()
 time.sleep(5)
@@ -28,7 +34,7 @@ time.sleep(5)
 if driver.find_element('xpath', '//*[@id="modal-header"]/span/span').text == 'Digite sua senha':
     # PASSWORD
     password = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input')
-    password.send_keys(PASSWORD)
+    password.send_keys(os.getenv('PASSWORD'))
     time.sleep(3)
     button_enter = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/div').click()
     time.sleep(5)
@@ -36,7 +42,7 @@ if driver.find_element('xpath', '//*[@id="modal-header"]/span/span').text == 'Di
 else:
     # VALIDATION
     validation = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/label/div/div[2]/div/input')
-    validation.send_keys(LOGIN_NAME)
+    validation.send_keys(os.getenv('VALIDATION'))
     time.sleep(2)
     button_advance = driver.find_element('xpath', '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div/div').click()
     time.sleep(5)
@@ -75,7 +81,7 @@ profile = driver.find_element('xpath', '//*[@id="react-root"]/div/div/div[2]/mai
 soup = BeautifulSoup(driver.page_source, 'lxml')
 
 
-# PROBLEMA: JUMPING TWEETS
+# PROBLEMA: JUMPING TWEETS HERE
 postings = soup.find_all('div', class_= 'css-901oao r-18jsvk2 r-37j5jr r-a023e6 r-16dba41 r-rjixqe r-bcqeeo r-bnwqim r-qvutc0')
 dates = soup.find_all('a', class_= 'css-4rbku5 css-18t94o4 css-901oao r-14j79pv r-1loqt21 r-xoduu5 r-1q142lx r-1w6e6rj r-37j5jr r-a023e6 r-16dba41 r-9aw3ui r-rjixqe r-bcqeeo r-3s2u2q r-qvutc0')
 
@@ -110,9 +116,23 @@ while True:
   if len(twetts) > 20:
       break
   
-    tweets2 = list(set(twetts))
+  tweets2 = list(set(twetts))
   if len(tweets2) > 20:
       break
+
+
+df = pd.DataFrame({'data':date, 'tweet':twetts}) 
+df.to_csv('twetts.csv', index=False, encoding='utf-8')
+
+
+
+
+
+
+
+
+
+
 
 
 
