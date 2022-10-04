@@ -1,5 +1,8 @@
 # SCRAPER version 3.0
 
+# PROBLEM: JUMPING TWEETS
+# PROBLEM: RETRIEVE DUPLICATED DATA
+
 
 
 # IMPORT DEPENDECIES
@@ -94,13 +97,13 @@ soup = BeautifulSoup(driver.page_source, 'lxml')
 
 
 
-UserTag = driver.find_element(By.XPATH, '//div[@data-tsetid="User-Names"]').text
-TimeStamp = driver.find_element(By.XPATH, "//time").get_attribute('datetime')
-Tweet = driver.find_element(By.XPATH, "//div[@data-testid='tweetText']").text
+# UserTag = driver.find_element(By.XPATH, '//div[@data-testid="User-Names"]').text
+# TimeStamp = driver.find_element(By.XPATH, "//time").get_attribute('datetime')
+# Tweet = driver.find_element(By.XPATH, "//div[@data-testid='tweetText']").text
 
-Reply = driver.find_element(By.XPATH, "//div[@data-testid='reply']").text
-reTweet = driver.find_element(By.XPATH, "//div[@data-testid='retweet']").text
-Likes = driver.find_element(By.XPATH, "//div[@data-testid='like']").text
+# Reply = driver.find_element(By.XPATH, "//div[@data-testid='reply']").text
+# reTweet = driver.find_element(By.XPATH, "//div[@data-testid='retweet']").text
+# Likes = driver.find_element(By.XPATH, "//div[@data-testid='like']").text
 
 
 
@@ -115,7 +118,7 @@ Likes = []
 reTweets = []
 Replys = []
 
-articles = driver.find_element(By.XPATH, "//article[@data-testid='tweet']")
+articles = driver.find_elements(By.XPATH, "//article[@data-testid='tweet']")
 
 while True:
     for article in articles:
@@ -134,16 +137,16 @@ while True:
         reTweet = driver.find_element(By.XPATH, ".//div[@data-testid='retweet']").text
         reTweets.append(reTweet)
         
-        Likes = driver.find_element(By.XPATH, ".//div[@data-testid='like']").text
-        Likes.append(Likes)
+        Like = driver.find_element(By.XPATH, ".//div[@data-testid='like']").text
+        Likes.append(Like)
         
     driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-    time.sleep(5)
+    time.sleep(3)
     
-    articles = driver.find_element(By.XPATH, "//article[@data-testid='tweet']")
+    articles = driver.find_elements(By.XPATH, "//article[@data-testid='tweet']")
     
     Tweets2 = list(set(Tweets));
-    if len(Tweets2) > 20:
+    if len(Tweets2) >= 20:
         break
 
 
@@ -151,10 +154,15 @@ while True:
 
 
 # EXPORT RETRIEVED DATA
-df = pd.DataFrame(zip(UserTags, TimeStamps, Tweets, Replys, reTweets, Likes),
-                  columns=["UserTags", "TimeStamps", "Tweets", "Replys", "reTweets", "Likes"])
+# df = pd.DataFrame(zip(UserTags, TimeStamps, Tweets, Replys, reTweets, Likes),
+#                  columns=["UserTags", "TimeStamps", "Tweets", "Replys", "reTweets", "Likes"])
 
-df.to_csv('df_tweets.csv', index=False, encoding='utf-8')
+df = pd.DataFrame({'UserTags':UserTags, 'TimeStamps':TimeStamps, 'Tweets':Tweets,'Replys':Replys, 'reTweets':reTweets, 'Likes':Likes})
+
+
+#df.head()
+
+df.to_excel('df_tweets.xlsx', index=False)
 
 
 
