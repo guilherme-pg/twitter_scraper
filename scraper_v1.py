@@ -14,7 +14,11 @@ import time
 import os
 from dotenv import load_dotenv
 
-aaa = load_dotenv()
+
+
+# https://www.youtube.com/watch?v=gpCnquo-HvQ
+
+load_dotenv()
 
 driver = webdriver.Chrome('chromedriver.exe')
 
@@ -57,6 +61,8 @@ else:
 
 
 
+
+
 # wait until a specific part of the page loads
 WebDriverWait(driver, 10).until(EC.presence_of_element_located(( By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/form/div[1]/div/div/div/label/div[2]/div/input' )))
 
@@ -91,15 +97,19 @@ dates = soup.find_all('a', class_= 'css-4rbku5 css-18t94o4 css-901oao r-14j79pv 
 
 
 
-twetts = []
-time_interval = []
+tweets = []
+post_date = []
+likes = []
+reTweets = []
+replys = []
+
 
 while True:
   for post in postings:
-      twetts.append(post.text)
+      tweets.append(post.text)
   
   for date in dates:
-      time_interval.append(date.text)
+      post_date.append(date.text)
   
     
   driver.execute_script('window.scroll(0, document.body.scrollHeight)')
@@ -110,19 +120,19 @@ while True:
   dates = soup.find_all('a', class_= 'css-4rbku5 css-18t94o4 css-901oao r-14j79pv r-1loqt21 r-xoduu5 r-1q142lx r-1w6e6rj r-37j5jr r-a023e6 r-16dba41 r-9aw3ui r-rjixqe r-bcqeeo r-3s2u2q r-qvutc0')
 
 
-  if len(time_interval) > 20:
+  if len(post_date) > 20:
       break
   
-  if len(twetts) > 20:
+  if len(tweets) > 20:
       break
   
-  tweets2 = list(set(twetts))
+  tweets2 = list(set(tweets))
   if len(tweets2) > 20:
       break
 
 
-df = pd.DataFrame({'data':date, 'tweet':twetts}) 
-df.to_csv('twetts.csv', index=False, encoding='utf-8')
+df = pd.DataFrame({'data':post_date, 'tweet':tweets}) 
+df.to_csv('df_tweets.csv', index=False, encoding='utf-8')
 
 
 
