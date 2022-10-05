@@ -1,7 +1,7 @@
 # SCRAPER version 1.0 with selenium
 # PROBLEM: jumping tweets
 
-# https://stackoverflow.com/questions/31147660/importerror-no-module-named-selenium
+
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -16,7 +16,6 @@ from dotenv import load_dotenv
 
 
 
-# https://www.youtube.com/watch?v=gpCnquo-HvQ
 
 load_dotenv()
 
@@ -87,7 +86,7 @@ profile = driver.find_element('xpath', '//*[@id="react-root"]/div/div/div[2]/mai
 soup = BeautifulSoup(driver.page_source, 'lxml')
 
 
-# PROBLEMA: JUMPING TWEETS HERE
+# PROBLEM: JUMPING TWEETS HERE
 postings = soup.find_all('div', class_= 'css-901oao r-18jsvk2 r-37j5jr r-a023e6 r-16dba41 r-rjixqe r-bcqeeo r-bnwqim r-qvutc0')
 dates = soup.find_all('a', class_= 'css-4rbku5 css-18t94o4 css-901oao r-14j79pv r-1loqt21 r-xoduu5 r-1q142lx r-1w6e6rj r-37j5jr r-a023e6 r-16dba41 r-9aw3ui r-rjixqe r-bcqeeo r-3s2u2q r-qvutc0')
 
