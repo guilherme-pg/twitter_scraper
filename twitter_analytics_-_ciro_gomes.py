@@ -13,7 +13,9 @@ df = pd.read_excel(r'df_tweets.xlsx')
 df['tweet'] = df['tweet'].str.lower()
 
 
-column_names = ['date', 'user', 'tweet']
+column_names = ["date", "user", "tweet", "hashtags", 
+                "retweets", "replys", "likes", "quotes"]
+
 
 
 df_both_candidates = pd.DataFrame(columns=column_names)
@@ -22,27 +24,17 @@ df_lula = pd.DataFrame(columns=column_names)
 
 
 
-# df_both_candidates = df['tweet'].str.contains('lula|bolsonaro', case=False, regex=True)
-# df_lula = df['tweet'].str.contains('lula', case=False, regex=True)
-# df_bolsonaro = df['tweet'].str.contains('bolsonaro', case=False, regex=True)
-
-
-
 
 
 for index, row in df.iterrows():
     
     if ("lula" in row['tweet']) and ("bolsonaro" in row['tweet']):
-    # if row['tweet'].isin(['lula', 'bolsonaro']):
-    # if row['tweet'].str.contains('lula|bolsonaro', case=False, regex=True):
         df_both_candidates.loc[len(df_both_candidates.index)] = row
 
     elif "lula" in row['tweet']:
-    # elif row['tweet'].str.contains('lula', case=False, regex=True):
         df_lula.loc[len(df_lula.index)] = row
     
     elif "bolsonaro" in row['tweet']:
-    # elif row['tweet'].str.contains('bolsonaro', case=False, regex=True):
         df_bolsonaro.loc[len(df_bolsonaro.index)] = row
 
 
@@ -50,6 +42,25 @@ for index, row in df.iterrows():
 
 
 
+
+
+x = df_both_candidates['date']
+y = df_both_candidates['likes']
+plt.scatter(x, y, color='green', alpha=0.5, marker=".", s=20)
+
+x = df_bolsonaro['date']
+y = df_bolsonaro['likes']
+plt.scatter(x, y, color='blue', alpha=0.5, marker=".", s=20)
+
+x = df_lula['date']
+y = df_lula['likes']
+plt.scatter(x, y, color='red', alpha=0.5, marker=".", s=20)
+
+plt.show()
+
+
+df_lula.scatter(x='date', y='likes', label = "line 1", )
+df_bolsonaro.scatter(x='date', y='likes', label = "line 2")
 
 
 
