@@ -1,6 +1,6 @@
 # WORD/TAG CLOUD
 
-# PROBLEM: some letters and words keep appearing even though they are on the excluded list
+# TO IMPROVE: some letters and words keep appearing even though they are on the excluded list
 
 
 # IMPORTS
@@ -18,13 +18,13 @@ lista_palavras_coluna = list( df['tweet'] )
 
 
 # EXCLUDING WORDS
-exclude_words = ["a", "o", "O", "0", "as", "os", "ao", "ante", "do", "da", "dos", 
-                 "das", "às", "nos", "nas", "https", "ma",
+exclude_words = ["a", "A", "o", "as", "os", "ao", "ante", "do", "da",
+                 "dos", "das", "às", "nos", "nas", "https", "ma", "que", "Que",
                  "com", "de", "em", "para", "perante", "por", "sem", "sob",
-                 "no", "na", "é", "que", "como", "https", "pela", "pelo",
+                 "no", "na", "é", "como", "https", "pela", "pelo",
                  "já", "está", "estão", "t", "co", "uma", "um", "isso", 
-                 "esse", "essa", " o ",
-                 "entre", "https://T.Co", "pra", "é", "/", "|", 
+                 "esse", "essa", "este", "esta", "Esta", "Este",
+                 "entre", "https://T.Co", "pra", "é", "/", "|", "Da", "Do"
                  "sobre", "trás", "à", "e", ".", ";", ",", ":", ";", "-"]
 
 exclude_http = "http"
@@ -44,6 +44,7 @@ for item in lista_palavras_coluna:
     lista_palavras = [item for item in lista_palavras if not item.startswith(exclude_http)]
 
     # exclude words
+    # TO IMPROVE: some words that shouldn't appear are appearing: O, Que
     for element in lista_palavras:
         if element in exclude_words:
             lista_palavras.remove(element)
@@ -54,7 +55,7 @@ for item in lista_palavras_coluna:
     
     todas_palavras = todas_palavras + lista_palavras
 
-
+type(todas_palavras[82])
 
 
 

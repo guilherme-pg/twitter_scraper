@@ -4,5 +4,8 @@
 /chromedriver.exe
 
 /df_tweets.csv
-
 /df_tweets.xlsx
+
+/scraper_v1.py
+/scraper_v2.py
+/scraper_v3.py

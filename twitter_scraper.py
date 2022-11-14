@@ -8,7 +8,7 @@ import pandas as pd
 
 
 # query = "(from:SOMEONE) until:YEAR-MONTH-DAY since:YEAR-MONTH-DAY"
-query = "(from:cirogomes) until:2022-10-05 since:2012-01-01"
+query = "(from:cirogomes) until:2022-10-30 since:2022-01-01"
 tweets = []
 limit = 5000
 
