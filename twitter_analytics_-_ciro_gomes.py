@@ -70,10 +70,17 @@ def to_plot(df, ylimit):
     fig.suptitle('Likes by mentions', fontsize=16)
     fig.autofmt_xdate()
     
-    for ax in axs.flat:
-        ax.set_xlim([datetime.date(2021, 12, 20), datetime.date(2022, 10, 30)])
-        ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
-        ax.xaxis.set_major_locator(mdates.MonthLocator(interval=2))
+    if ylimit == 28000:
+        for ax in axs.flat:
+            ax.set_xlim([datetime.date(2022, 8, 25), datetime.date(2022, 10, 8)])
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%d'))
+            ax.xaxis.set_major_locator(mdates.DayLocator(interval=5))
+            
+    else:    
+        for ax in axs.flat:
+            ax.set_xlim([datetime.date(2021, 12, 20), datetime.date(2022, 10, 30)])
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
+            ax.xaxis.set_major_locator(mdates.MonthLocator(interval=2))
     
     plt.setp(axs, ylim=(0, ylimit))
     plt.tight_layout()
