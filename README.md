@@ -12,11 +12,11 @@
 <p>The target time interval was from 01/01/2022 to 10/30/2022 (date of the end of the second round of the election for President of the Republic).</p>
 
 
-![alt text](https://github.com/[guilherme-pg ]/[twitter_scraper]/blob/[master]/saved_charts/twitter_analytic_ciro_gomes_likes_adversaries_citations.jpg?raw=true)
+![alt text](https://github.com/guilherme-pg/twitter_scraper/master/saved_charts/twitter_analytic_ciro_gomes_likes_adversaries_citations.jpg?raw=true)
 
-![alt text](https://github.com/[guilherme-pg ]/[twitter_scraper]/blob/[master]/saved_charts/twitter_analytic_ciro_gomes_tweets_by_day.jpg?raw=true)
+![alt text](https://github.com/guilherme-pg/twitter_scraper/master/saved_charts/twitter_analytic_ciro_gomes_tweets_by_day.jpg?raw=true)
 
-![alt text](https://github.com/[guilherme-pg ]/[twitter_scraper]/blob/[master]/saved_charts/twitter_analytic_election_ciro_gomes_likes_by_mentions.jpg?raw=true)
+![alt text](https://github.com/guilherme-pg/twitter_scraper/master/saved_charts/twitter_analytic_election_ciro_gomes_likes_by_mentions.jpg?raw=true)
 
-![alt text](https://github.com/[guilherme-pg ]/[twitter_scraper]/blob/[master]/saved_charts/twitter_analytic_election_ciro_gomes_likes_by_mentions_october.jpg?raw=true)
+![alt text](https://github.com/guilherme-pg/twitter_scraper/master/saved_charts/twitter_analytic_election_ciro_gomes_likes_by_mentions_october.jpg?raw=true)
 
