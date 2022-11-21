@@ -12,64 +12,57 @@ import seaborn as sns
 
 df = pd.read_excel(r'df_tweets.xlsx')
 
-
-# separate dates and time ???????????????????????? require?
-df['dates'] = pd.to_datetime(df['date']).dt.date
-df['time'] = pd.to_datetime(df['date']).dt.time
-
-
-
-
 df['n_tweet'] = 1
 
 df['date'] = pd.to_datetime(df['date'])
 
+tweets_by_day = df.resample('D', on='date')['n_tweet'].sum().to_frame()
 
-tweets_by_day = df.resample('D', on='date')['n_tweet'].sum()
-tweets_by_week = df.resample('W', on='date')['n_tweet'].mean() # REQUIRE: SET MEAN
-tweets_by_month = df.resample('M', on='date')['n_tweet'].sum()
+tweets_by_day['by_week'] = tweets_by_day['n_tweet'].rolling(7).mean()
 
-
-tweets_by_day = tweets_by_day.to_frame()
-tweets_by_week = tweets_by_week.to_frame()
-tweets_by_month = tweets_by_month.to_frame()
+tweets_by_day['by_month'] = tweets_by_day['n_tweet'].rolling(30).mean()
+tweets_by_day = tweets_by_day.dropna()
 
 
-sns.lineplot(
-    data=tweets_by_day,
-    x= 'date',
-    y= 'n_tweet'
-    )
 
-
-sns.lineplot(
-    data=tweets_by_week,
-    x= 'date',
-    y= 'n_tweet',
-    color='red'
-    ).set(title='Tweets by day')
-
-
-sns.lineplot(
-    data=tweets_by_month,
-    x= 'date',
-    y= 'n_tweet',
-    color="green"
-    )
-
+# TO IMPROVE: PLOT FROM DIFFERENT COLUMNS
+# TO IMPROVE: SET MARGIN TO TITLE (BOTTOM) AND Y LABEL (RIGHT)
+plt.figure(figsize=(10, 6))
+with sns.axes_style("whitegrid"):
+    sns.lineplot(
+        data=tweets_by_day,
+        x= 'date',
+        y= 'n_tweet',
+        color="orange",
+        alpha=0.5,
+        label="tweets by day"
+        ).set(title='Tweets by day and average by week and month')
+    
+    sns.lineplot(
+        data=tweets_by_day,
+        x= 'date',
+        y= 'by_week',
+        color='blue',
+        alpha=0.5,
+        label="average tweets by week"
+        )
+    
+    sns.lineplot(
+        data=tweets_by_day,
+        x= 'date',
+        y= 'by_month',
+        color="red",
+        alpha=0.5,
+        label="average tweets by month"
+        )
 
 plt.xticks(rotation=45)
 plt.ylabel("Number of Tweets")
 plt.xlabel("")
-# change months to initials
-# set line with avarenge
-# set margin ?
-
-
-# ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
 
 # SAVE PLOT
-#plt.savefig("twitter_analytic_ciro_gomes_tweets_by_day.jpg")
+plt.savefig("saved_charts/twitter_analytic_ciro_gomes_tweets_by_day.jpg",
+            dpi=300)
 
 
 
@@ -159,6 +152,7 @@ def to_plot(df, ylimit, title):
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
             ax.xaxis.set_major_locator(mdates.MonthLocator(interval=2))
     
+    plt.figure(figsize=(10, 6))
     plt.setp(axs, ylim=(0, ylimit))
     plt.tight_layout()
         
@@ -171,7 +165,8 @@ ylimit = 50000
 title = 'Likes by mentions'
 to_plot(df, ylimit, title)
 
-plt.savefig("twitter_analytic_election_ciro_gomes_likes_by_mentions_with_outlier.jpg")
+plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_by_mentions_with_outlier.jpg",
+            dpi=300)
         
 
 
@@ -184,12 +179,13 @@ ylimit = 32000
 title = 'Likes by mentions without the outlier'
 to_plot(df_withoutlier, ylimit, title)
 
-plt.savefig("twitter_analytic_election_ciro_gomes_likes_by_mentions.jpg")
+plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_by_mentions.jpg",
+            dpi=300)
      
 
 
 
-
+# here here here here ??????????????????????w
 # ONLY OCTOBER
 start_date = "2022-09-01"
 end_date = "2022-10-03"
@@ -197,37 +193,44 @@ end_date = "2022-10-03"
 period = (df['date'] >= start_date) & (df['date'] <= end_date)
 df_october = df.loc[period]
 
+
 ylimit = 28000
-title = 'Likes by mentions at the month before the first election round of 2022'
+title = 'Likes by mentions a month before the first round of 2022 election'
 to_plot(df_october, ylimit, title)
 
-plt.savefig("twitter_analytic_election_ciro_gomes_likes_by_mentions_october.jpg")
+plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_by_mentions_october.jpg",
+            dpi=300)
 
 
 
 
 
 
-# DONUT PLOTS
+# DONUT PLOT
 
-# TO IMPROVE: select colors
-# TO IMPROVE: set labels
-# TO IMPROVE: set percents
-colores = {
-    "Lula":"red",
-    "Bolsonaro":"blue",
-    "Bolsonaro and Lula":"purple"
-    }
+# TO IMPROVE: select colors by dataframe values
+# TO IMPROVE: set labels by dataframe values
+#colores = {"Lula":"red", "Bolsonaro":"blue", "Bolsonaro and Lula":"purple"}
+colores = ["blue", "purple", "red"]
+labels = ["Bolsonaro", "Bolsonaro and Lula", "Lula"]
+
 df_without_ciro = df_candidates.loc[df_candidates['candidate'] != "Ciro"]
 total_citation_candidates = df_without_ciro['candidate'].value_counts()
+
+plt.figure(figsize=(10, 6))
 plt.pie(total_citation_candidates,
-        wedgeprops =colores)
+        colors =colores,
+        labels=labels,
+        autopct='%1.1f%%',
+        pctdistance=.5)
+
 my_circle = plt.Circle( (0,0), 0.7, color='white')
 p = plt.gcf()
 p.gca().add_artist(my_circle)
 
 plt.suptitle("Amount of Citations")
-plt.show()
 
+plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_adversaries_citations.jpg",
+            dpi=300)
 
 
