@@ -1,7 +1,6 @@
-# Ciro Analytics
+# Ciro Tweets Analytics
 
 # TO IMPROVE: separate responsibilities
-
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -9,27 +8,79 @@ import matplotlib.dates as mdates
 import datetime
 import seaborn as sns
 
-
 df = pd.read_excel(r'df_tweets.xlsx')
 
+
+
+
+
+# ~~~~~~~~~~~~~~~~~~  GENERAL ADJUSTS  ~~~~~~~~~~~~~~~~~~
 df['n_tweet'] = 1
 
 df['date'] = pd.to_datetime(df['date'])
 
+start_date = '2022-01-01'
+end_date = '2022-09-30'
+
+df_without_october = df[df.date.between(start_date, end_date)]
+
 tweets_by_day = df.resample('D', on='date')['n_tweet'].sum().to_frame()
+tweets_by_day_without_october = df_without_october.resample('D', on='date')['n_tweet'].sum().to_frame()
+
+
+
+
+
+# ~~~~~~~~~~~~~~~~~~  DISTRIBUTION and CENTER MEASURES  ~~~~~~~~~~~~~~~~~~
+tweets_by_day_aggregated = tweets_by_day_without_october.groupby('n_tweet',
+                                                 as_index=False).value_counts()
+
+mean = tweets_by_day_aggregated['count'].mean()
+
+val1 = tweets_by_day_aggregated[tweets_by_day_aggregated['n_tweet'] > tweets_by_day_aggregated['n_tweet'].median()].iloc[0]
+val2 = tweets_by_day_aggregated[tweets_by_day_aggregated['n_tweet'] < tweets_by_day_aggregated['n_tweet'].median()].iloc[-1]
+
+palette = ['red' if val in [val1['n_tweet'], val2['n_tweet']] 
+           else 'orange'
+           for val in tweets_by_day_aggregated['n_tweet']]
+
+
+# TO IMPROVE: add mode
+plot = sns.barplot(data=tweets_by_day_aggregated,
+            x='n_tweet',
+            y='count',
+            palette=palette,
+            alpha=.5)
+
+plot.axhline(mean, color='grey')
+plot.set(title='Median as red columns and Mean as the line')
+plt.ylabel("Number of times Tweets per day")
+plt.xlabel("Number of Tweets by Day")
+# agregar por quantidade de postagem
+# agregar pela quantidade de likes
+# agregar pela quantidade de retweets
+# agregar pela quantidade de comentários
+
+plt.savefig("saved_charts/twitter_analytic_ciro_gomes_mean_median_mode.jpg",
+            dpi=300)
+
+
+
+
+
+# ~~~~~~~~~~~~~~~~~~  TWEETS BY DAY AND AVERAGE BY WEEK AND MONTH  ~~~~~~~~~~~~~~~~~~
+# TO IMPROVE: CHANGE 'tweets by day' TO SCATTER PLOT
+# TO IMPROVE: PLOT FROM DIFFERENT COLUMNS
+# TO IMPROVE: SET MARGIN TO TITLE (BOTTOM) AND Y LABEL (RIGHT)
 
 tweets_by_day['by_week'] = tweets_by_day['n_tweet'].rolling(7).mean()
 
 tweets_by_day['by_month'] = tweets_by_day['n_tweet'].rolling(30).mean()
 tweets_by_day = tweets_by_day.dropna()
 
-
-
-# TO IMPROVE: PLOT FROM DIFFERENT COLUMNS
-# TO IMPROVE: SET MARGIN TO TITLE (BOTTOM) AND Y LABEL (RIGHT)
 plt.figure(figsize=(10, 6))
 with sns.axes_style("whitegrid"):
-    sns.lineplot(
+    sns.scatterplot(
         data=tweets_by_day,
         x= 'date',
         y= 'n_tweet',
@@ -60,7 +111,6 @@ plt.xticks(rotation=45)
 plt.ylabel("Number of Tweets")
 plt.xlabel("")
 
-# SAVE PLOT
 plt.savefig("saved_charts/twitter_analytic_ciro_gomes_tweets_by_day.jpg",
             dpi=300)
 
@@ -68,14 +118,9 @@ plt.savefig("saved_charts/twitter_analytic_ciro_gomes_tweets_by_day.jpg",
 
 
 
-
-
-
-
+# ~~~~~~~~~~~~~~~~~~  ENGAGEMENT BY QUOTE  ~~~~~~~~~~~~~~~~~~
 # convert tweet to lower case
 df['tweet'] = df['tweet'].str.lower()
-
-
 
 column_names = ["date", "user", "tweet", "hashtags", 
                 "retweets", "replys", "likes", "quotes"]
@@ -110,7 +155,9 @@ df_candidates = pd.concat([df_both_candidates,
           df_ciro],
           ignore_index=True)
 
-    
+
+# TO IMPROVE: DETECT OUTLIER AND CUT IT
+# TO IMPROVE: SET LINE WITH THE AVERAGE BY WEEK
 def to_plot(df, ylimit, title):
     
     # TO IMPROVE: change x and y varaibles structure
@@ -152,15 +199,12 @@ def to_plot(df, ylimit, title):
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
             ax.xaxis.set_major_locator(mdates.MonthLocator(interval=2))
     
-    plt.figure(figsize=(10, 6))
     plt.setp(axs, ylim=(0, ylimit))
     plt.tight_layout()
         
 
 
-
-
-# GENERAL PLOT
+# ~~~~~~~~ ENGAGEMENT GENERAL PLOT
 ylimit = 50000
 title = 'Likes by mentions'
 to_plot(df, ylimit, title)
@@ -170,9 +214,7 @@ plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_by_mentions_with_out
         
 
 
-
-
-# WITHOUT OUTLIER
+# ~~~~~~~~ ENGAGEMENT WITHOUT OUTLIER
 df_withoutlier = df.loc[df['likes'] < 40000]
 
 ylimit = 32000
@@ -185,8 +227,7 @@ plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_by_mentions.jpg",
 
 
 
-# here here here here ??????????????????????w
-# ONLY OCTOBER
+# ~~~~~~~~ ENGAGEMENT ONLY OCTOBER
 start_date = "2022-09-01"
 end_date = "2022-10-03"
 
@@ -206,7 +247,7 @@ plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_by_mentions_october.
 
 
 
-# DONUT PLOT
+# ~~~~~~~~~~~~~~~~~~  QUOTE BY ADVERSARY  ~~~~~~~~~~~~~~~~~~
 
 # TO IMPROVE: select colors by dataframe values
 # TO IMPROVE: set labels by dataframe values
