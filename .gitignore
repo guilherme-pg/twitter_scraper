@@ -1,11 +1,50 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
 
-/.env
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
 
-/chromedriver.exe
-
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
 /df_tweets.csv
 /df_tweets.xlsx
 
-/scraper_v1.py
-/scraper_v2.py
-/scraper_v3.py
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.venv
+venv
+.env
+__pycache__
+.idea
+
+
+/chromedriver.exe
+
+
+
