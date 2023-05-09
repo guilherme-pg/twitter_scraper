@@ -11,9 +11,6 @@ import seaborn as sns
 df = pd.read_excel(r'df_tweets.xlsx')
 
 
-
-
-
 # ~~~~~~~~~~~~~~~~~~  GENERAL ADJUSTS  ~~~~~~~~~~~~~~~~~~
 df['n_tweet'] = 1
 
@@ -26,9 +23,6 @@ df_without_october = df[df.date.between(start_date, end_date)]
 
 tweets_by_day = df.resample('D', on='date')['n_tweet'].sum().to_frame()
 tweets_by_day_without_october = df_without_october.resample('D', on='date')['n_tweet'].sum().to_frame()
-
-
-
 
 
 # ~~~~~~~~~~~~~~~~~~  DISTRIBUTION and CENTER MEASURES  ~~~~~~~~~~~~~~~~~~
@@ -63,9 +57,6 @@ plt.xlabel("Number of Tweets by Day")
 
 plt.savefig("saved_charts/twitter_analytic_ciro_gomes_mean_median_mode.jpg",
             dpi=300)
-
-
-
 
 
 # ~~~~~~~~~~~~~~~~~~  TWEETS BY DAY AND AVERAGE BY WEEK AND MONTH  ~~~~~~~~~~~~~~~~~~
@@ -113,9 +104,6 @@ plt.xlabel("")
 
 plt.savefig("saved_charts/twitter_analytic_ciro_gomes_tweets_by_day.jpg",
             dpi=300)
-
-
-
 
 
 # ~~~~~~~~~~~~~~~~~~  ENGAGEMENT BY QUOTE  ~~~~~~~~~~~~~~~~~~
@@ -203,7 +191,6 @@ def to_plot(df, ylimit, title):
     plt.tight_layout()
         
 
-
 # ~~~~~~~~ ENGAGEMENT GENERAL PLOT
 ylimit = 50000
 title = 'Likes by mentions'
@@ -211,7 +198,6 @@ to_plot(df, ylimit, title)
 
 plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_by_mentions_with_outlier.jpg",
             dpi=300)
-        
 
 
 # ~~~~~~~~ ENGAGEMENT WITHOUT OUTLIER
@@ -223,8 +209,6 @@ to_plot(df_withoutlier, ylimit, title)
 
 plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_by_mentions.jpg",
             dpi=300)
-     
-
 
 
 # ~~~~~~~~ ENGAGEMENT ONLY OCTOBER
@@ -241,10 +225,6 @@ to_plot(df_october, ylimit, title)
 
 plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_by_mentions_october.jpg",
             dpi=300)
-
-
-
-
 
 
 # ~~~~~~~~~~~~~~~~~~  QUOTE BY ADVERSARY  ~~~~~~~~~~~~~~~~~~
@@ -273,5 +253,3 @@ plt.suptitle("Amount of Citations")
 
 plt.savefig("saved_charts/twitter_analytic_ciro_gomes_likes_adversaries_citations.jpg",
             dpi=300)
-
-

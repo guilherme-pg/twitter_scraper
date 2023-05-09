@@ -1,9 +1,20 @@
 
 # Twitter Scrape Project
 
+## How to use it
+
+
+First, clone the project in some folder.
+Install the requirements.txt, preferably in a virtual environment.
+Activate the virtual environment and run the follow code:
+> python -m flask run
+
+
+## About
+
 Snscrape is used to access Twitter data, obtaining dates, likes, hashtags, retweets, users, among other information.
 
-The information is transformed into a dataframe and saved.</p>
+The information is transformed into a dataframe and saved.
 
 From this information, several analyzes are possible: from the frequency of interactions to the engagement of each post, from the reach to the impact of the message.
 

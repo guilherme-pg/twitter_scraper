@@ -1,7 +1,5 @@
 # WORD/TAG CLOUD
 
-# TO IMPROVE: some letters and words keep appearing even though they are on the excluded list
-
 
 # IMPORTS
 import pandas as pd
@@ -11,8 +9,6 @@ from wordcloud import WordCloud
 df = pd.read_excel(r'df_tweets.xlsx')
 
 
-
-# 
 # lista_palavras_coluna = list( df_ [' column_name '] )
 lista_palavras_coluna = list( df['tweet'] )
 
@@ -28,7 +24,6 @@ exclude_words = ["a", "A", "o", "as", "os", "ao", "ante", "do", "da",
                  "sobre", "trás", "à", "e", ".", ";", ",", ":", ";", "-"]
 
 exclude_http = "http"
-
 
 
 todas_palavras = []
@@ -58,7 +53,6 @@ for item in lista_palavras_coluna:
 type(todas_palavras[82])
 
 
-
 # CREATING THE WORD CLOUD
 cloud = WordCloud(
     max_words=75,
@@ -68,17 +62,10 @@ cloud = WordCloud(
     ).generate(" ".join(todas_palavras))
 
 
-
-
 # PLOT
-plt.imshow( cloud, interpolation='bilinear' )
-
+plt.imshow(cloud, interpolation='bilinear' )
 plt.axis('off')
-
 plt.show()
 
 
-
-
-
-
+# TO IMPROVE: some letters and words keep appearing even though they are on the excluded list
