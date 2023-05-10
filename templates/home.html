@@ -2,9 +2,40 @@
 <html lang=“en”>
     <head>
         <meta charset="utf-8">
-        <title>Flask & Templates</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}" >
+        <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+
+        <title>Twitter Scraper</title>
     </head>
     <body>
-        <h1>FLASK TEMPLATE WORKING!</h1>
+        <h1>Twitter Scrapper</h1>
+
+        <form method="POST" class="form" action="/process_form">
+
+            <div class="inputs_block">
+                <div class="label_input">
+                    <p>User to Search</p>
+                    <input type="text" class="input_option" name="input_name" placeholder="Enter Name">
+                </div>
+
+                <div class="label_input">
+                    <p>Word to Search</p>
+                    <input type="text" class="input_option" name="input_word" placeholder="Enter Word to Search">
+                </div>
+
+                <div class="label_input">
+                    <p>Start Date</p>
+                    <input type="date" class="input_option" name="input_date_init">
+                </div>
+
+                <div class="label_input">
+                    <p>End Date</p>
+                    <input type="date" class="input_option" name="input_date_end">
+                </div>
+            </div>
+
+            <input type="submit" class="input_option input_submit" value="Submit">
+        </form>
+
     </body>
 </html>

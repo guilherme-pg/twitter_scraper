@@ -7,7 +7,9 @@
 First, clone the project in some folder.
 Install the requirements.txt, preferably in a virtual environment.
 Activate the virtual environment and run the follow code:
-> python -m flask run
+> python app.py
+
+
 
 
 ## About
