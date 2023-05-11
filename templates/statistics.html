@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang=“en”>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='statistics.css') }}" >
+        <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+
+        <title>Twitter Analytics</title>
+    </head>
+    <body>
+        <div class="tab_manipulation">
+            <form method="POST" class="form" action="/analytics_form">
+
+                <div class="label_input">
+                    <p>Word to Search</p>
+                    <input type="text" class="input_option" name="input_word" placeholder="Enter Word to Search">
+                </div>
+
+                <input type="submit" class="input_option input_submit" value="Submit">
+            </form>
+        </div>
+
+        <div class="tab_charts">
+            <h1>Twitter Analytics</h1>
+
+            <div class="images_charts">
+                <img src="../saved_charts/twitter_analytic_mean_median_mode.jpg" alt="Mean, Median and Mode">
+            </div>
+        </div>
+
+    </body>
+</html>

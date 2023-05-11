@@ -1,49 +1,37 @@
 # SCRAPER machine
 
-
 import snscrape.modules.twitter as sntwitter
 import pandas as pd
 
 
-# require: pre-process the date format
-NAME = ""
-START_DATA = ""
-END_DATA = ""
-NUMB_TWEETS_LIMITS = 0
+def process_data(name, start_date, end_date, max_tweets_numb):
+    # require: pre-process the date format
+    # require: filter word in process or in analytics?
 
+    # query GUIDE = f"(from:NAME) until:YEAR-MONTH-DAY since:YEAR-MONTH-DAY"
+    query = f"(from:{name}) until:{start_date} since:{end_date}"
 
-# query GUIDE = f"(from:NAME) until:YEAR-MONTH-DAY since:YEAR-MONTH-DAY"
-query_1 = f"(from:{NAME}) until:{START_DATA} since:{END_DATA}"
-query = "(from:cirogomes) until:2022-10-30 since:2022-01-01"
-tweets = []
-limit = 10000  # NUMB_TWEETS_LIMITS
+    tweets = []
 
-for tweet in sntwitter.TwitterSearchScraper(query).get_items():
-    
-    if len(tweets) == limit:
-        break
-    else:
-        tweets.append([tweet.date, 
-                       tweet.user.username,
-                       tweet.content,
-                       tweet.hashtags,
-                       tweet.retweetCount,
-                       tweet.replyCount,
-                       tweet.likeCount,
-                       tweet.quoteCount
-                       ])
+    for tweet in sntwitter.TwitterSearchScraper(query).get_items():
 
+        if len(tweets) == max_tweets_numb:
+            break
+        else:
+            tweets.append([tweet.date,
+                           tweet.user.username,
+                           tweet.content,
+                           tweet.hashtags,
+                           tweet.retweetCount,
+                           tweet.replyCount,
+                           tweet.likeCount,
+                           tweet.quoteCount
+                           ])
 
-df = pd.DataFrame(tweets, columns=["date", "user", "tweet", "hashtags", 
-                                   "retweets", "replys", "likes", "quotes"])
+    df = pd.DataFrame(tweets, columns=["date", "user", "tweet", "hashtags",
+                                       "retweets", "replys", "likes", "quotes"])
 
+    df['date'] = df['date'].dt.tz_localize(None)  # remove timezones
 
-# remove timezones
-df['date'] = df['date'].dt.tz_localize(None)
-
-
-# SAVE AS EXCEL ?????
-df.to_excel('df_tweets.xlsx', index=False)
-
-
-
+    # SAVING
+    df.to_csv('dataframe/df_tweets.csv', index=False)

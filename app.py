@@ -1,4 +1,7 @@
+import pandas as pd
 from flask import Flask, render_template, request
+from twitter_scraper import process_data
+from twitter_analytics import process_analytics
 
 app = Flask(__name__)
 
@@ -14,11 +17,25 @@ def process_form():
     input_word = request.form.get('input_word')
     input_date_init = request.form.get('input_date_init')
     input_date_end = request.form.get('input_date_end')
-    return "Data received"
+    input_max_tweets = request.form.get('input_max_tweets')
+
+    process_data(input_name, input_max_tweets, input_date_init, input_date_end)
+
+    return render_template("statistics.html")
 
 
 @app.route("/statistics", methods=['GET'])
-def home():
+def statistics():
+    df = pd.read_csv(r'dataframe/df_tweets.csv')
+    process_analytics(df)
+    # render in /statistics.html images produced by statis analytics: get dataframe and make plots
+    return render_template("statistics.html")
+
+
+@app.route("/process_form", methods=['POST'])
+def analytics_form():
+    input_word = request.form.get('input_word')
+    process_data(input_word)
     return render_template("statistics.html")
 
 

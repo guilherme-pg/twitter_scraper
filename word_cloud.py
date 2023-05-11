@@ -1,16 +1,15 @@
 # WORD/TAG CLOUD
 
 
-# IMPORTS
 import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
-df = pd.read_excel(r'df_tweets.xlsx')
+df = pd.read_csv(r'df_tweets.csv')
 
 
-# lista_palavras_coluna = list( df_ [' column_name '] )
-lista_palavras_coluna = list( df['tweet'] )
+# list_words_column = list( df_ [' column_name '] )
+list_words_column = list(df['tweet'])
 
 
 # EXCLUDING WORDS
@@ -26,46 +25,47 @@ exclude_words = ["a", "A", "o", "as", "os", "ao", "ante", "do", "da",
 exclude_http = "http"
 
 
-todas_palavras = []
+all_words = []
 
-for item in lista_palavras_coluna:
-    lista_palavras = item.split()
+for item in list_words_column:
+    list_words = item.split()
     
     # convert all to lowercase
-    a = (map(lambda x: x.lower(), lista_palavras))
-    lista_palavras = list(a)
+    a = (map(lambda x: x.lower(), list_words))
+    list_words = list(a)
     
     # exclude http links
-    lista_palavras = [item for item in lista_palavras if not item.startswith(exclude_http)]
+    list_words = [item for item in list_words if not item.startswith(exclude_http)]
 
     # exclude words
     # TO IMPROVE: some words that shouldn't appear are appearing: O, Que
-    for element in lista_palavras:
+    for element in list_words:
         if element in exclude_words:
-            lista_palavras.remove(element)
+            list_words.remove(element)
     
     # convert all to title case
-    a = (map(lambda x: x.title(), lista_palavras))
-    lista_palavras = list(a)
+    a = (map(lambda x: x.title(), list_words))
+    list_words = list(a)
     
-    todas_palavras = todas_palavras + lista_palavras
+    all_words = all_words + list_words
 
-type(todas_palavras[82])
+type(all_words[82])  # change 82 to 100, 75 or 50?
 
 
 # CREATING THE WORD CLOUD
 cloud = WordCloud(
     max_words=75,
-    background_color= "white",
+    background_color="white",
     width=800,
     height=600
-    ).generate(" ".join(todas_palavras))
+    ).generate(" ".join(all_words))
 
 
 # PLOT
-plt.imshow(cloud, interpolation='bilinear' )
+plt.imshow(cloud, interpolation='bilinear')
 plt.axis('off')
 plt.show()
 
+plt.savefig("saved_charts/twitter_analytic_words_cloud.jpg", dpi=300)
 
 # TO IMPROVE: some letters and words keep appearing even though they are on the excluded list

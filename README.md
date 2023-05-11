@@ -36,7 +36,5 @@ The target time interval was from 01/01/2022 to 10/30/2022 (date of the end of t
 ----------------
 
 To Improve:
-* Create an interface.
-* Automate the process for 'name', 'time range' and 'search words'.
 * Automate and create visualization options.
-
+* Automate outlier detection.
