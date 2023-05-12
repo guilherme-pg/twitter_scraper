@@ -1,17 +1,6 @@
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-family: 'Fjalla One', sans-serif;
-}
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    background-color: LightBlue;
-    min-height: 100vh;
 }
 
 h1 {
@@ -36,16 +25,6 @@ h1 {
     justify-content: center;
 }
 
-.input_option {
-    border-radius: 5px;
-    outline: none;
-    padding: 10px;
-    margin: 10px 5px 0px 5px;
-}
 
-.input_submit {
-    padding: 15px;
-    margin: 30px 5px 0px 5px;
-}
 
 

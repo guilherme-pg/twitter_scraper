@@ -1,0 +1,12 @@
+
+body {
+    flex-direction: row;
+}
+
+.tab_manipulation {
+    background-color: green;
+}
+
+.tab_charts {
+    background-color: blue;
+}

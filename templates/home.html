@@ -2,6 +2,7 @@
 <html lang=“en”>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='standard.css') }}" >
         <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}" >
         <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
 
@@ -15,12 +16,7 @@
             <div class="inputs_block">
                 <div class="label_input">
                     <p>User to Search</p>
-                    <input type="text" class="input_option" name="input_name" placeholder="Enter Name">
-                </div>
-
-                <div class="label_input">
-                    <p>Word to Search</p>
-                    <input type="text" class="input_option" name="input_word" placeholder="Enter Word to Search">
+                    <input type="text" class="input_option" name="input_search" placeholder="What to search?">
                 </div>
 
                 <div class="label_input">

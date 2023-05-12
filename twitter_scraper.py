@@ -4,12 +4,12 @@ import snscrape.modules.twitter as sntwitter
 import pandas as pd
 
 
-def process_data(name, start_date, end_date, max_tweets_numb):
-    # require: pre-process the date format
-    # require: filter word in process or in analytics?
+def process_data(search_obj, max_tweets_numb, start_date, end_date):
+    print(start_date)
+    print(end_date)
 
     # query GUIDE = f"(from:NAME) until:YEAR-MONTH-DAY since:YEAR-MONTH-DAY"
-    query = f"(from:{name}) until:{start_date} since:{end_date}"
+    query = f"(from:{search_obj}) since:{start_date} until:{end_date}"
 
     tweets = []
 

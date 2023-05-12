@@ -13,13 +13,12 @@ def home():
 
 @app.route("/process_form", methods=['POST'])
 def process_form():
-    input_name = request.form.get('input_name')
-    input_word = request.form.get('input_word')
+    input_search = request.form.get('input_search')
+    input_max_tweets = request.form.get('input_max_tweets')
     input_date_init = request.form.get('input_date_init')
     input_date_end = request.form.get('input_date_end')
-    input_max_tweets = request.form.get('input_max_tweets')
 
-    process_data(input_name, input_max_tweets, input_date_init, input_date_end)
+    process_data(input_search, input_max_tweets, input_date_init, input_date_end)
 
     return render_template("statistics.html")
 
